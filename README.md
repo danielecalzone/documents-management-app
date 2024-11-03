@@ -65,6 +65,11 @@ src/
 │  └─ formatDate.ts
 └─ vite-env.d.ts
 ```
+## Preview
+
+A Docker image of this application has been built and deployed to a cloud server. You can access a live preview of the Documents Management Application without needing to install the project locally:
+
+[Live Preview](https://documents-management-app-daniele-calzone.onrender.com/)
 
 ## Installation
 
@@ -113,9 +118,9 @@ To get started with the application, follow these steps:
 
 ## Usage
 
-- Creating a Document: Click on the button to create a new document, fill out the form in the modal, and submit it. The new document will appear in the list or grid view.
-- Sorting Documents: Use the sorting options to arrange documents by name, version, or creation date.
-- Toggle Views: Switch between list and grid views as per your preference.
+- **Creating a Document**: Click on the button to create a new document, fill out the form in the modal, and submit it. The new document will appear in the list or grid view.
+- **Sorting Documents**: Use the sorting options to arrange documents by name, version, or creation date.
+- **Toggle Views**: Switch between list and grid views as per your preference.
 
 ## Testing
 
