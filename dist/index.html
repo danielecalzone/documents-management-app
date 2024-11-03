@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/documents-icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documents Management App</title>
+    <link
+      rel="preload"
+      href="styles.css"
+      as="style"
+      onload="this.rel='stylesheet'"
+    />
+    <style>
+      body {
+        transition: opacity 0.3s ease;
+        opacity: 0;
+      }
+
+      body.loading {
+        background: #edeff3;
+        animation: loadingAnimation 1s infinite;
+      }
+
+      @keyframes loadingAnimation {
+        0% {
+          background-color: #edeff3;
+        }
+        50% {
+          background-color: #d7d9e0;
+        }
+        100% {
+          background-color: #edeff3;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-ZP__jfWV.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-D61vdlcE.css">
+  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+  <body class="loading">
+    <div id="notification-banner" class="notification-banner hidden">
+      <div class="notification-content">
+        <div class="icon-container">
+          <img
+            id="notification-icon"
+            src="/bell-alarm-icon.svg"
+            alt="Notification Icon"
+            width="28px"
+            height="28px"
+          />
+          <div id="notification-badge" class="notification-badge">0</div>
+        </div>
+        <span class="notification-text">New document added</span>
+      </div>
+    </div>
+    <div class="title">
+      <h1>Documents</h1>
+    </div>
+    <div class="sort-row">
+      <label for="sort-select">Sort by:</label>
+      <select class="sort-select">
+        <option value="" disabled selected hidden>Select one...</option>
+        <option value="name">Name</option>
+        <option value="version">Version</option>
+        <option value="date">Date</option>
+      </select>
+      <div class="icons">
+        <span class="list-icon" id="list-icon">
+          <img
+            src="/list-icon.svg"
+            alt="List icon"
+            width="18px"
+            height="18px"
+          />
+        </span>
+        <span class="grid-icon" id="grid-icon">
+          <img
+            src="/grid-icon.svg"
+            alt="Grid icon"
+            width="25px"
+            height="25px"
+          />
+        </span>
+      </div>
+    </div>
+
+    <div class="header-row">
+      <div class="column-title">Name</div>
+      <div class="column-title">Contributors</div>
+      <div class="column-title">Attachments</div>
+    </div>
+
+    <div class="document-list"></div>
+
+    <div class="create-document-btn-container">
+      <button class="create-document-btn">
+        <img
+          src="/add-icon.svg"
+          alt="Add document"
+          width="22px"
+          height="22px"
+          class="add-icon"
+        />
+        Add document
+      </button>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          document.body.classList.remove('loading');
+          document.body.style.opacity = '1';
+        }, 800);
+      });
+    </script>
+    <div class="notification-container"></div>
+  </body>
+</html>

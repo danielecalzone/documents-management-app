@@ -1,0 +1,40 @@
+var y=Object.defineProperty;var b=(n,e,t)=>e in n?y(n,e,{enumerable:!0,configurable:!0,writable:!0,value:t}):n[e]=t;var a=(n,e,t)=>b(n,typeof e!="symbol"?e+"":e,t);(function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))i(o);new MutationObserver(o=>{for(const s of o)if(s.type==="childList")for(const r of s.addedNodes)r.tagName==="LINK"&&r.rel==="modulepreload"&&i(r)}).observe(document,{childList:!0,subtree:!0});function t(o){const s={};return o.integrity&&(s.integrity=o.integrity),o.referrerPolicy&&(s.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?s.credentials="include":o.crossOrigin==="anonymous"?s.credentials="omit":s.credentials="same-origin",s}function i(o){if(o.ep)return;o.ep=!0;const s=t(o);fetch(o.href,s)}})();const D="http://localhost:8080/documents";async function C(){const n=await fetch(D);if(!n.ok)throw new Error("Failed to fetch documents");return n.json()}const L="ws://localhost:8080/notifications";let c;function E(){return navigator.onLine}function S(n){if(!E()){console.warn("Cannot connect to WebSocket: Offline");return}c=new WebSocket(L),c.onmessage=e=>{const t=JSON.parse(e.data);n(t)},c.onerror=e=>{console.error("WebSocket Error:",e)},c.onclose=()=>{console.log("WebSocket connection closed")}}function $(){c&&c.close()}function h(n){const e=new Date(n),i=Math.floor((new Date().getTime()-e.getTime())/1e3),o=[{seconds:31536e3,label:"year"},{seconds:2592e3,label:"month"},{seconds:604800,label:"week"},{seconds:86400,label:"day"},{seconds:3600,label:"hour"},{seconds:60,label:"minute"}];for(const s of o){const r=Math.floor(i/s.seconds);if(r>=1)return`${r} ${s.label}${r!==1?"s":""} ago`}return`${i} second${i!==1?"s":""} ago`}class f{constructor(e){this.document=e}render(){const e=document.createElement("div");return e.className="document-item",e.innerHTML=`
+      <div class="document-name">
+        ${this.document.Title}
+        <div class="version-number">Version: ${this.document.Version}</div>
+        <div class="creation-date">Creation Date: ${h(this.document.CreatedAt)}</div>
+      </div>
+      <div class="contributors">
+        ${this.document.Contributors.map(t=>`<div>${t.Name}</div>`).join("")}
+      </div>
+      <div class="attachments">
+        ${this.document.Attachments.map(t=>`<div>${t}</div>`).join("")}
+      </div>
+    `,e}renderGrid(){const e=document.createElement("div");return e.className="document-item-grid",e.innerHTML=`
+      <div class="document-name">${this.document.Title}</div>
+      <div class="version-number">Version: ${this.document.Version}</div>
+      <div class="creation-date">Creation Date: ${h(this.document.CreatedAt)}</div>
+      <div class="contributors">
+        ${this.document.Contributors.map(t=>`<div>${t.Name}</div>`).join("")}
+      </div>
+      <div class="attachments">
+        ${this.document.Attachments.map(t=>`<div>${t}</div>`).join("")}
+      </div>
+    `,e}}class I{constructor(e){a(this,"documents",[]);a(this,"isGridView",!1);this.container=e}render(){this.container.innerHTML="",this.isGridView?this.renderGridView():this.renderListView()}renderListView(){this.documents.forEach(e=>{const t=new f(e);this.container.appendChild(t.render())})}renderGridView(){const e=Math.ceil(this.documents.length/3);for(let t=0;t<e;t++){const i=document.createElement("div");i.className="grid-row";for(let o=0;o<3;o++){const s=t*3+o;if(s<this.documents.length){const r=new f(this.documents[s]),d=document.createElement("div");d.className="grid-box",d.appendChild(r.renderGrid()),i.appendChild(d)}}this.container.appendChild(i)}}updateDocuments(e){this.documents=e,this.render()}toggleGridView(){this.isGridView=!0,this.render()}toggleListView(){this.isGridView=!1,this.render()}sortDocuments(e){this.documents.sort((t,i)=>{switch(e){case"name":return t.Title.localeCompare(i.Title);case"date":return new Date(i.CreatedAt).getTime()-new Date(t.CreatedAt).getTime();case"version":return t.Version.localeCompare(i.Version);default:return 0}}),this.render()}addDocument(e){this.documents=[...this.documents,e],this.updateDocuments(this.documents)}}class V{constructor(){a(this,"modal");a(this,"form");this.modal=document.createElement("div"),this.modal.classList.add("modal","hidden"),this.modal.innerHTML=`
+      <div class="modal-content">
+        <span class="close-button" id="close-modal">&times;</span>
+        <h2>Create New Document</h2>
+        <form id="document-form">
+          <label for="document-title">Name:</label>
+          <input type="text" id="document-title" required />
+
+          <label for="contributors">Contributors (enter names separated by commas):</label>
+          <input type="text" id="contributors" required />
+          
+          <label for="attachments">Attachments (enter values separated by commas):</label>
+          <input type="text" id="attachments" required />
+
+          <button type="submit">Create document</button>
+        </form>
+      </div>
+    `,document.body.appendChild(this.modal),this.form=this.modal.querySelector("#document-form"),this.modal.querySelector("#close-modal").addEventListener("click",()=>{this.hide()}),window.addEventListener("click",e=>{e.target===this.modal&&this.hide()}),this.form.addEventListener("submit",e=>{e.preventDefault(),this.createDocument()})}show(){this.modal.classList.remove("hidden")}hide(){this.modal.classList.add("hidden")}createDocument(){const e=document.getElementById("document-title").value,t=document.getElementById("contributors").value,i=document.getElementById("attachments").value.split(",").map(r=>r.trim()),o=t.split(",").map((r,d)=>({ID:`${Date.now()}-${d}`,Name:r.trim()})),s={ID:Date.now().toString(),CreatedAt:new Date().toISOString(),UpdatedAt:new Date().toISOString(),Title:e,Attachments:i,Contributors:o,Version:"1.0.0"};this.onCreateDocument(s),this.showNotification("Document created successfully!"),this.hide(),this.form.reset()}showNotification(e){const t=document.querySelector(".notification-container"),i=document.createElement("div");i.classList.add("notification-banner"),i.innerHTML=`<div class="notification-creation-text">${e}</div>`,t==null||t.appendChild(i),setTimeout(()=>{t==null||t.removeChild(i)},5e3)}onCreateDocument(e){console.log("New Document Created:",e)}}const N=document.querySelector(".document-list"),l=new I(N),p=new V;p.onCreateDocument=n=>{l.addDocument(n)};const T=document.querySelector(".create-document-btn");T.addEventListener("click",()=>p.show());const m=document.getElementById("grid-icon"),u=document.getElementById("list-icon"),g=document.querySelector(".header-row"),w=document.querySelector(".create-document-btn-container");m.addEventListener("click",()=>{l.toggleGridView(),g.style.display="none",w.style.gridTemplateColumns="repeat(3, 1fr)",m.style.opacity="1",u.style.opacity="0.5"});u.addEventListener("click",()=>{l.toggleListView(),g.style.display="grid",w.style.gridTemplateColumns="1fr",m.style.opacity="0.5",u.style.opacity="1"});async function k(){try{const e=(await C()).slice(0,3);l.updateDocuments(e)}catch(n){console.error("Error loading documents:",n)}}S(O);k();const A=document.querySelector(".sort-select");A.addEventListener("change",n=>{const e=n.target.value;l.sortDocuments(e)});let v=0;function O(){v++;const n=document.getElementById("notification-badge");n.textContent=v.toString(),document.getElementById("notification-banner").classList.remove("hidden")}window.addEventListener("beforeunload",$);"serviceWorker"in navigator&&window.addEventListener("load",()=>{navigator.serviceWorker.register("/sw.js").then(n=>{console.log("Service Worker registered with scope:",n.scope),n.onupdatefound=()=>{const e=n.installing;e&&(e.onstatechange=()=>{e.state==="installed"&&navigator.serviceWorker.controller&&(console.log("New content is available, please refresh."),confirm("A new version of the app is available. Would you like to refresh?")&&window.location.reload())})}}).catch(n=>{console.error("Service Worker registration failed:",n)})});

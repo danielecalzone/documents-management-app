@@ -1,0 +1,136 @@
+.header-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  width: 80%;
+  max-width: 1000px;
+  border-radius: 5px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.column-title {
+  color: #999999;
+  padding: 0 20px;
+}
+
+.document-list {
+  width: 80%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.grid-view {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 1000px;
+}
+
+.grid-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.grid-box {
+  flex: 1;
+  margin-right: 10px;
+  background-color: white;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 1.5;
+  color: #676767;
+  padding: 20px 0;
+}
+
+.grid-box .contributors,
+.grid-box .attachments {
+  padding: 10px 0;
+}
+
+.grid-box:last-child {
+  margin-right: 0;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 1000px;
+  margin-bottom: 15px;
+}
+.sort-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 1000px;
+  margin-bottom: 15px;
+  color: #2f3a4c;
+}
+
+.sort-select {
+  border: none;
+  background-color: transparent;
+  color: #4c87ef;
+  font-size: 1rem;
+  padding: 0;
+}
+
+.sort-row label {
+  margin-right: 10px;
+}
+
+.sort-row select {
+  padding: 5px;
+  margin-right: auto;
+}
+
+.sort-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 1000px;
+  margin-bottom: 15px;
+  color: #2f3a4c;
+}
+
+.sort-select {
+  border: none;
+  background-color: transparent;
+  color: #4c87ef;
+  font-size: 1rem;
+  padding: 0;
+}
+
+.sort-row label {
+  margin-right: 10px;
+}
+
+.sort-row select {
+  padding: 5px;
+  margin-right: auto;
+}
+
+.icons {
+  display: flex;
+  gap: 6px;
+}
+
+.grid-icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+}
+
+.list-icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
