@@ -73,7 +73,7 @@ To get started with the application, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/danielecalzone/documents-management-app.git
    cd documents-management-app
    ```
 
@@ -122,26 +122,29 @@ To get started with the application, follow these steps:
 The application includes various automated tests to ensure correctness. You can run the tests with the following commands:
 
 1. Unit Tests:
+   
    ```bash
    yarn test:unit
    ```
-2. Integration Tests:
+3. Integration Tests:
+   
    ```bash
    yarn test:integration
    ```
-3. End-to-End Tests:
+5. End-to-End Tests:
+   
    ```bash
    yarn test:e2e
    ```
-4. Performance Tests:
+7. Performance Tests:
+   
    ```bash
    yarn test:performance
    ```
 
 ## Development Considerations
 
-- The application is built with maintainability in mind, allowing for easy addition of new features and modifications.
-
+* The application is built with maintainability in mind, allowing for easy addition of new features and modifications.
 * The UI is implemented based on provided mockups, ensuring a consistent user experience.
 * The application has been tested for compatibility with the latest two versions of Chrome.
 
@@ -161,4 +164,4 @@ The Documents Management Application is designed to be a user-friendly tool for 
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/danielecalzone/documents-management-app/blob/master/LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/danielecalzone/documents-management-app/blob/main/LICENSE) file for details.
